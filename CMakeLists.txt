@@ -4,7 +4,7 @@ project(
 	Tetrisxx
 	LANGUAGES CXX
 )
-
+set(CMAKE_BUILD_TYPE "Debug")
 aux_source_directory(src SRC)
 add_executable(tetrisxx ${SRC})
 target_include_directories(tetrisxx PUBLIC include)

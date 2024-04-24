@@ -1,9 +1,10 @@
-#include "screen.hxx"
+#include "tetris.hxx"
+#define ON_UNIX
 
 signed main(){
-	Screen screen(1, 1);
-	for(;;){
-	screen.flush();
-	}
-	return 0;
+	//system("stty raw -echo -F /dev/tty");
+	Tetris game{};
+	//game.start();
+		game.step(5);
+		game.step(3);
 }

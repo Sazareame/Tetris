@@ -6,14 +6,18 @@
 
 #ifdef TETRIS_GUI_COLOUR
 #define PUTBLOCK printf("  ")
+#define PUTWALL  printf("\x1b[45m \x1b[0m")
+#define DRAW_BOUNDARY_LINE   printf("\x1b[45m                      \x1b[0m")
+#define DRAW_BODY_LINE       printf("\x1b[45m \x1b[0m                    \x1b[45m \x1b[0m\n")
 #else
 #define PUTBLOCK printf("O ")
+#define PUTWALL  printf("+")
+#define DRAW_BOUNDARY_LINE   printf("======================")
+#define DRAW_BODY_LINE       printf("+                    +\n")
 #endif
 #define PUTSPACE printf("\x1b[0m\x1b[1m  ")
 
 #define DRAW_ONE_LINE_SPACE  printf("                    ")
-#define DRAW_BOUNDARY_LINE   printf("======================")
-#define DRAW_BODY_LINE       printf("+                    +\n")
 
 #define CLEAR_SCREEN   printf("\x1b[2J")
 #define HIDE_CURSOR    printf("\x1b[?25l")

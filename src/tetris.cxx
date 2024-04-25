@@ -120,10 +120,10 @@ Tetris::show()const{
 	printf("    your score: %lu\n", score);
 	auto pre = previous.cbegin();
 	for(auto cur = status.cbegin(); cur != status.cend(); ++cur, ++pre){
-		putchar('+');
+		PUTWALL;
 		if((*cur & 0x03ff) == 0){
 			DRAW_ONE_LINE_SPACE;
-			putchar('+');
+			PUTWALL;
 			DRAW_NEXT_LINE;
 		}
 		else{
@@ -138,7 +138,7 @@ Tetris::show()const{
 					PUTSPACE;
 			}
 			RESET_ALL;
-			putchar('+');
+			PUTWALL;
 			DRAW_NEXT_LINE;
 		}
 	}

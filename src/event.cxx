@@ -1,10 +1,25 @@
 #include "tetris.hxx"
 #include <stdlib.h>
+#ifdef ON_UNIX
 #include <unistd.h>
+#else
+#include <Windows.h>
+#include <conio.h>
+#endif
 #include <stdio.h>
 
 int
 Tetris::key_event(){
+#ifdef ON_UNIX
+	return key_event_unix();
+#else
+	return key_event_win();
+#endif
+}
+
+#ifdef ON_UNIX
+int
+Tetris::key_event_unix(){
 	system("stty raw -echo -F /dev/tty");
 
 	fd_set rfds;
@@ -31,3 +46,23 @@ Tetris::key_event(){
 	}
 	return 1;
 }
+
+#else
+
+int
+Tetris::key_event_win(){
+	int ch = -1;
+	if(_kbhit()){
+		ch = _getch();
+		switch(ch){
+			case 97: tetro->slide_left(); break;
+			case 100: tetro->slide_right(); break;
+			case 119: tetro->rotate(); break;
+			case 115: accelarate();
+			default: return 0;
+		}
+		return 1;
+	}
+	return 0;
+}
+#endif

@@ -1,8 +1,9 @@
 #include "tetris.hxx"
 #include <random>
-#include <unistd.h>
 #ifdef ON_UNIX
 #include <unistd.h>
+#else
+#include <Windows.h>
 #endif
 
 void
@@ -18,7 +19,7 @@ void
 Tetris::step(){
 	make_tetro();
 	previous = status;
-	elapse = 600000;
+	elapse = 600;
 	for(;;){
 		wait();
 		if(key_event()){
@@ -53,9 +54,15 @@ Tetris::step(){
 
 void
 Tetris::wait()const{
-	usleep(elapse);
+	wait(elapse);
+}
+
+void
+Tetris::wait(unsigned long interval)const{
 #ifdef ON_UNIX
-	sleep(1);
+	usleep(interval * 1000);
+#else
+	Sleep(interval);
 #endif
 }
 
@@ -101,16 +108,14 @@ Tetris::stop(){
 
 void
 Tetris::accelarate(){
-	elapse = 60;
+	elapse = 2;
 }
 
 void
 Tetris::show()const{
 	MAKE_BOLD;
 	CLEAR_SCREEN;
-	fflush(stdout);
 	START_DRAW;
-	fflush(stdout);
 	DRAW_BOUNDARY_LINE;
 	printf("    your score: %lu\n", score);
 	auto pre = previous.cbegin();
@@ -136,7 +141,6 @@ Tetris::show()const{
 			putchar('+');
 			DRAW_NEXT_LINE;
 		}
-		fflush(stdout);
 	}
 	DRAW_BOUNDARY_LINE;
 	fflush(stdout);
@@ -150,10 +154,10 @@ Tetris::start(){
 		START_DRAW;
 		printf("\n\n\n\n\t\tTetrisxx\n\n\t\tAuthor: Sazareame\n\n\t\tAll Rights Reserved");
 		fflush(stdout);
-		usleep(500000);
+		wait(500);
 		CLEAR_SCREEN;
 		fflush(stdout);
-		usleep(100000);
+		wait(100);
 	}
 	RESET_ALL;
 }
@@ -164,7 +168,7 @@ Tetris::quit(){
 	CLEAR_SCREEN;
 	printf("\n\n\n\n\t\tGame Over!\n\n\t\tYour Score: %lu\n\n\t\tThanks for Playing!", score);
 	fflush(stdout);
-	sleep(1);
+	wait(1000);
 	RESET_ALL;
 }
 

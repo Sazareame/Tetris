@@ -13,4 +13,5 @@ add_definitions(-DTETRIS_GUI_COLOUR)
 
 if(UNIX)
 	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
+	add_definitions(-DON_UNIX)
 endif()

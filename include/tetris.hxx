@@ -9,7 +9,7 @@ class Tetris{
 	Tetrominoes* tetro = 0;
 
 	bool game_is_over = false;
-	int elapse = 600000;
+	int elapse = 600;
 	unsigned long score = 0;
 
 	std::deque<uint16_t> status{};
@@ -17,6 +17,7 @@ class Tetris{
 
 	void make_tetro();
 	void wait()const;
+	void wait(unsigned long interval)const;
 	void update();
 	void stop();
 	int key_event();
@@ -35,6 +36,11 @@ class Tetris{
 	white     7
 	*/
 	void set_colour(int flag)const;
+#ifdef ON_UNIX
+	int key_event_unix();
+#else
+	int key_event_win();
+#endif
 
 public:
 	Tetris(){

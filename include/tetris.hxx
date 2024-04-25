@@ -24,6 +24,9 @@ class Tetris{
 	void accelarate();
 	void show()const;
 	std::deque<uint16_t>::iterator eliminate();
+	bool will_overlap(int vert_pos, int hori_pos);
+	void tetro_slide_right();
+	void tetro_slide_left();
 
 	/*
 	colour    falg

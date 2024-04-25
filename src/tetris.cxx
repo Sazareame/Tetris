@@ -28,7 +28,6 @@ Tetris::step(){
 			status = previous;
 			continue;
 		}
-		uint16_t tetro_status_per_line = tetro->get_status();
 		int cmp_line = tetro->get_vert_pos() + 1;
 		int offset = tetro->get_hori_pos();
 		// get the bottom
@@ -37,19 +36,30 @@ Tetris::step(){
 			return;
 		}
 		// overlapped
-		for(int i = 0; i < 4; i++){
-			if(cmp_line - i < 0) break;
-			if(((status[cmp_line - i] >> offset) & 0x000f) & tetro_status_per_line){
-				stop();
-				return;
-			}
-			tetro_status_per_line >>= 4;
+		if(will_overlap(cmp_line, offset)){
+			stop();
+			return;
 		}
 		tetro->drop();
 		update();
 		show();
 		status = previous;
 	}
+}
+
+bool
+Tetris::will_overlap(int vert_pos, int hori_pos){
+	if(hori_pos < 0 || hori_pos > SCREEN_WIDTH)
+		return false;
+	uint16_t tetro_status = tetro->get_status();
+	for(int i = 0; i < 4; i++){
+		if(vert_pos - i < 0) break;
+		if(((status[vert_pos - i] >> hori_pos) & 0x000f) & tetro_status){
+			return true;
+		}
+		tetro_status >>= 4;
+	}
+	return false;
 }
 
 void
@@ -176,4 +186,18 @@ void
 Tetris::set_colour(int flag)const{
 	printf("\x1b[3%dm", flag);
 	printf("\x1b[4%dm", flag);
+}
+
+void
+Tetris::tetro_slide_left(){
+	if(will_overlap(tetro->get_vert_pos(), tetro->get_hori_pos() + 1))
+		return;
+	tetro->slide_left();
+}
+
+void
+Tetris::tetro_slide_right(){
+	if(will_overlap(tetro->get_vert_pos(), tetro->get_hori_pos() - 1))
+		return;
+	tetro->slide_left();
 }

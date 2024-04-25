@@ -1,10 +1,8 @@
 #ifndef BLOCK_HXX_
 #define BLOCK_HXX_
 
-#include <bitset>
-#include "macros.hxx"
+#include <stdint.h>
 
-#define BLOCK 'O'
 #define BOUND '@'
 
 class Tetrominoes{
@@ -14,12 +12,18 @@ class Tetrominoes{
 	int hori_pos;
 
 	// height and width of the tertrominoes
-	int const height = 0;
-	int const width = 0; 
+	int height = 0;
+	int width = 0; 
+	int pose = 0;
+	int index;
+	int colour;
 	uint16_t status;
 
+	void set_hw();
+
 public:
-Tetrominoes(uint16_t _status, int hori);
+Tetrominoes(int kind);
+Tetrominoes(int kind, int _colour);
 
 void drop();
 void slide_left();
@@ -28,12 +32,7 @@ void rotate();
 int get_vert_pos()const;
 int get_hori_pos()const;
 uint16_t get_status()const;
+int get_colour()const;
 };
-
-
-
-
-
-
 
 #endif

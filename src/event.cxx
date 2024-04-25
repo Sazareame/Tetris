@@ -1,46 +1,32 @@
 #include "tetris.hxx"
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
-#include <linux/input.h>
+#include <stdio.h>
 
 void
 Tetris::key_event(){
-	int fd = open("/dev/tty", O_RDONLY);
-	if(fd == -1){
-		printf("open error\n");
-		exit(1);
-	}
+	system("stty raw -echo -F /dev/tty");
 
 	fd_set rfds;
-
 	struct timeval tv;
-	tv.tv_sec = 0;
-	tv.tv_usec = 800000;
+	int ch = -1;
 
-	struct input_event event;
-	for(;;){
-		FD_ZERO(&rfds);
-		FD_SET(fd, &rfds);
-		if(select(fd + 1, &rfds, 0, 0, &tv) == 1){
-			if(read(fd, &event, sizeof(event))){
-				if(event.type == EV_KEY && event.value == 0){
-					switch(event.code){
-						case 38:
-						case 113: tetro->slide_left(); break;
-						case 40:
-						case 114: tetro->slide_right(); break;
-						case 25:
-						case 111: tetro->rotate(); break;
-						case 39:
-						case 116:
-						default: break;
-					}
-				}
-			}
-		}else{
-			break;
-		}
+	FD_ZERO(&rfds);
+	FD_SET(0, &rfds);
+	tv.tv_sec = 0;
+	tv.tv_usec = 50;
+
+	if(select(1, &rfds, 0, 0, &tv) > 0)
+		ch = getchar();
+
+	system("stty -raw echo -F /dev/tty");
+	if(ch == 3) exit(0);
+
+	switch(ch){
+		case 97: tetro->slide_left(); break;
+		case 100: tetro->slide_right(); break;
+		case 119: tetro->rotate(); break;
+		case 115: accelarate();
+		default: break;
 	}
-	close(fd);
 }

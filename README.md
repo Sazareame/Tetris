@@ -20,4 +20,7 @@ The archive only contains source files. To build it, please run
 `s` for accelarating     
 **NOTE that arrow keys are not supported. Perhaps it will be fixed sometimes in the future**     
 
-*Thanks for playing (or testing) this tiny game. It is currently a half-completed programme, I shall progressively perfect it.*
+*Thanks for playing (or testing) this tiny game. It is currently a half-completed programme, I shall progressively perfect it.*     
+
+#### PS
+I chose to monitor keyboard input via console e.g. `/dev/tty` on Linux and `_kbhit()` on Win, insomuch, you will not be able to play it in Git bash etc. ...

@@ -19,7 +19,7 @@ class Tetris{
 	void wait()const;
 	void update();
 	void stop();
-	void key_event();
+	int key_event();
 	void accelarate();
 	void show()const;
 	std::deque<uint16_t>::iterator eliminate();

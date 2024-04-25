@@ -21,7 +21,12 @@ Tetris::step(){
 	elapse = 600000;
 	for(;;){
 		wait();
-		key_event();
+		if(key_event()){
+			update();
+			show();
+			status = previous;
+			continue;
+		}
 		uint16_t tetro_status_per_line = tetro->get_status();
 		int cmp_line = tetro->get_vert_pos() + 1;
 		int offset = tetro->get_hori_pos();

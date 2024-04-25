@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void
+int
 Tetris::key_event(){
 	system("stty raw -echo -F /dev/tty");
 
@@ -27,6 +27,7 @@ Tetris::key_event(){
 		case 100: tetro->slide_right(); break;
 		case 119: tetro->rotate(); break;
 		case 115: accelarate();
-		default: break;
+		default: return 0;
 	}
+	return 1;
 }

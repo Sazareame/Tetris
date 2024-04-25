@@ -12,6 +12,6 @@ The archive only contains source files. To build it, please run
 `a` and `d` for moving the block left and right     
 `w` for rotating the block     
 `s` for accelarating     
-## NOTE that arrow keys are not supported. Perhaps it will be fixed sometimes in the future ##     
+**NOTE that arrow keys are not supported. Perhaps it will be fixed sometimes in the future**     
 
-### Thanks for playing (or testing) this tiny game. It is currently a half-completed programme, I shall progressively perfect it.###
+*Thanks for playing (or testing) this tiny game. It is currently a half-completed programme, I shall progressively perfect it.*

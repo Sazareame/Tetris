@@ -1,7 +1,5 @@
 #include "tetris.hxx"
 #include <random>
-#include <time.h>
-
 #include <unistd.h>
 #ifdef ON_UNIX
 #include <unistd.h>
@@ -10,8 +8,8 @@
 void
 Tetris::make_tetro(){
 	if(tetro) delete tetro;
+	static std::mt19937_64 e(time(0));
 	static std::uniform_int_distribution<> d(0, 6);
-	static std::default_random_engine e(time(0));
 	int index = d(e);
 	tetro = new Tetrominoes(index);
 }

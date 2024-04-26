@@ -1,6 +1,7 @@
 #include "tetris.hxx"
 #include <random>
 #include <chrono>
+#include <fstream>
 #ifdef ON_UNIX
 #include <unistd.h>
 #else
@@ -20,38 +21,43 @@ void
 Tetris::step(){
 	make_tetro();
 	previous = status;
-	elapse = 600;
+	elapse = 500;
 	auto start_timestamp = std::chrono::system_clock::now();
 	for(;;){
-		wait();
 		auto time_elapsed = std::chrono::system_clock::now();
-		if(std::chrono::duration_cast<std::chrono::milliseconds>(time_elapsed - start_timestamp).count() > 600){
-			start_timestamp = time_elapsed;	
-			goto exedrop;
-		}
 		if(key_event()){
 			update();
+#ifdef DBG_MODE
+			dump(1);
+#endif
 			show();
 			status = previous;
 			continue;
+		}else{
+			wait();
 		}
-exedrop:
-		int cmp_line = tetro->get_vert_pos() + 1;
-		int offset = tetro->get_hori_pos();
-		// get the bottom
-		if(cmp_line == 20){
-			stop();
-			return;
+		if(std::chrono::duration_cast<std::chrono::milliseconds>(time_elapsed - start_timestamp).count() > elapse){
+			int cmp_line = tetro->get_vert_pos() + 1;
+			int offset = tetro->get_hori_pos();
+			// get the bottom
+			if(cmp_line == 20){
+				stop();
+				return;
+			}
+			// overlapped
+			if(will_overlap(cmp_line, offset)){
+				stop();
+				return;
+			}
+			tetro->drop();
+			start_timestamp = std::chrono::system_clock::now();
+			update();
+#ifdef DBG_MODE
+			dump(0);
+#endif
+			show();
+			status = previous;
 		}
-		// overlapped
-		if(will_overlap(cmp_line, offset)){
-			stop();
-			return;
-		}
-		tetro->drop();
-		update();
-		show();
-		status = previous;
 	}
 }
 
@@ -208,4 +214,34 @@ Tetris::tetro_slide_right(){
 	if(will_overlap(tetro->get_vert_pos(), tetro->get_hori_pos() - 1))
 		return;
 	tetro->slide_right();
+}
+
+void
+Tetris::dump(int flag)const{
+	auto f = std::fstream("./debug_info.txt", std::fstream::app);
+	if(!f.is_open()) exit(0);
+	switch(flag){
+	case 1:
+		f << "\ntriggered by movement\n";
+		break;
+	case 0:
+	 	f << "\ntriggerd by dropping\n";
+		break;
+	case 2:
+		f << "\nrecored after sleep\n";
+		break;
+	}
+	f << "horizen position: " << tetro->get_hori_pos() << "\n";
+	f << "vertical position: " << tetro->get_vert_pos() << "\n";
+	f << "tetro status" << tetro->get_status() << "\n";
+	f << "game status:\n\t";
+	for(auto const& line: status)
+		f << line << "\n\t";
+}
+
+void
+Tetris::dbg_show(){
+	CLEAR_SCREEN;
+	printf("movement occured\n");
+	fflush(stdout);
 }

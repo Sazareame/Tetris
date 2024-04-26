@@ -9,7 +9,7 @@ class Tetris{
 	Tetrominoes* tetro = 0;
 
 	bool game_is_over = false;
-	int elapse = 600;
+	int elapse = 500;
 	unsigned long score = 0;
 
 	std::deque<uint16_t> status{};
@@ -27,6 +27,9 @@ class Tetris{
 	bool will_overlap(int vert_pos, int hori_pos);
 	void tetro_slide_right();
 	void tetro_slide_left();
+
+	void dump(int flag)const;
+	void dbg_show();
 
 	/*
 	colour    falg

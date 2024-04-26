@@ -1,7 +1,7 @@
 ## Tetrisxx - A Simple cmd Line Tetris Game Wirt in CXX
 
 ### Intro
-This little programme is a Tetris game running on terminal. Hitherto it can only run on Linux, I shall soon make it playable on Windows.   
+This little programme is a Tetris game running on terminal.   
 
 The archive only contains source files. To build it, please run   
 

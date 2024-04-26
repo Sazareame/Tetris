@@ -14,4 +14,6 @@ The archive only contains source files. To build it, please run
 `s` for accelarating     
 **NOTE that arrow keys are not supported. Perhaps it will be fixed sometimes in the future**     
 
+**NOTE that the performance on WSL might be a little unstable**     
+
 *Thanks for playing (or testing) this tiny game. It is currently a half-completed programme, I shall progressively perfect it.*

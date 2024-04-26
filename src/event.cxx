@@ -38,8 +38,8 @@ Tetris::key_event_unix(){
 	if(ch == 3) exit(0);
 
 	switch(ch){
-		case 97: tetro->slide_left(); break;
-		case 100: tetro->slide_right(); break;
+		case 97: tetro_slide_left(); break;
+		case 100: tetro_slide_right(); break;
 		case 119: tetro->rotate(); break;
 		case 115: accelarate();
 		default: return 0;

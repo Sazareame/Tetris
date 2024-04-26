@@ -199,5 +199,5 @@ void
 Tetris::tetro_slide_right(){
 	if(will_overlap(tetro->get_vert_pos(), tetro->get_hori_pos() - 1))
 		return;
-	tetro->slide_left();
+	tetro->slide_right();
 }

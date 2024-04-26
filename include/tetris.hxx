@@ -55,6 +55,10 @@ public:
 		elapse = default_elapse;
 		status.resize(SCREEN_HEIGHT);
 	}
+	~Tetris(){
+		if(tetro) delete tetro;
+		if(next) delete next;
+	}
 	// drop a tetro from top to where it should stop
 	void step();
 	bool is_end()const;

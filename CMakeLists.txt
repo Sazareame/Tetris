@@ -10,7 +10,7 @@ add_executable(tetrisxx ${SRC})
 target_include_directories(tetrisxx PUBLIC include)
 
 add_definitions(-DTETRIS_GUI_COLOUR)
-#add_definitions(-DDBG_MODE)
+# add_definitions(-DDBG_MODE)
 
 if(UNIX)
 	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})

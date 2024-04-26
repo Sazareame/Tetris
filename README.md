@@ -16,4 +16,6 @@ The archive only contains source files. To build it, please run
 
 **NOTE that the performance on WSL might be a little unstable**     
 
+**If you choose to build it on Windows, I recommend you use MSVC or build via Visual Studio instead of GCC/Clang due to they probably resulting in abnormal refreshing**
+
 *Thanks for playing (or testing) this tiny game. It is currently a half-completed programme, I shall progressively perfect it.*

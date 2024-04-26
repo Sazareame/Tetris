@@ -10,7 +10,8 @@ class Tetris{
 	Tetrominoes* next = 0;
 
 	bool game_is_over = false;
-	int elapse = 500;
+	const int default_elapse;
+	int elapse;
 	unsigned long score = 0;
 
 	std::deque<uint16_t> status{};
@@ -50,7 +51,8 @@ class Tetris{
 #endif
 
 public:
-	Tetris(){
+	Tetris(int _default_elapse = 400): default_elapse(_default_elapse){
+		elapse = default_elapse;
 		status.resize(SCREEN_HEIGHT);
 	}
 	// drop a tetro from top to where it should stop

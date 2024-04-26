@@ -1,6 +1,6 @@
 #include "tetris.hxx"
 
-signed main(){
+signed main(int argc, char const** argv){
 	//system("stty raw -echo -F /dev/tty");
 	Tetris game{};
 	game.start();

@@ -27,7 +27,7 @@ void
 Tetris::step(){
 	make_tetro();
 	previous = status;
-	elapse = 500;
+	elapse = default_elapse;
 	auto start_timestamp = std::chrono::system_clock::now();
 	for(;;){
 		auto time_elapsed = std::chrono::system_clock::now();

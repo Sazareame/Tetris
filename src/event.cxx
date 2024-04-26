@@ -57,8 +57,8 @@ Tetris::key_event_win(){
 	if(_kbhit()){
 		ch = _getch();
 		switch(ch){
-			case 97: tetro->slide_left(); break;
-			case 100: tetro->slide_right(); break;
+			case 97: tetro_slide_left(); break;
+			case 100: tetro_slide_right(); break;
 			case 119: tetro->rotate(); break;
 			case 115: accelarate();
 			default: return 0;

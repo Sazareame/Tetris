@@ -3,7 +3,7 @@
 signed main(){
 	//system("stty raw -echo -F /dev/tty");
 	Tetris game{};
-	// game.start();
+	game.start();
 	for(;;){
 		game.step();
 		if(game.is_end()){

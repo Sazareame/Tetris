@@ -14,7 +14,13 @@ Tetris::make_tetro(){
 	static std::mt19937_64 e(time(0));
 	static std::uniform_int_distribution<> d(0, 6);
 	int index = d(e);
-	tetro = new Tetrominoes(index);
+	if(!next){
+		int new_index = d(e);
+		tetro = new Tetrominoes(new_index);
+	}else{
+		tetro = next;
+	}
+	next = new Tetrominoes(index);
 }
 
 void
@@ -132,7 +138,7 @@ Tetris::stop(){
 
 void
 Tetris::accelarate(){
-	elapse = 2;
+	elapse = 1;
 }
 
 void
@@ -141,7 +147,7 @@ Tetris::show()const{
 	CLEAR_SCREEN;
 	START_DRAW;
 	DRAW_BOUNDARY_LINE;
-	printf("    your score: %lu\n", score);
+	printf("       your score: %lu\n", score);
 	auto pre = previous.cbegin();
 	for(auto cur = status.cbegin(); cur != status.cend(); ++cur, ++pre){
 		PUTWALL;
@@ -161,12 +167,31 @@ Tetris::show()const{
 				else
 					PUTSPACE;
 			}
-			RESET_ALL;
 			PUTWALL;
 			DRAW_NEXT_LINE;
 		}
 	}
 	DRAW_BOUNDARY_LINE;
+
+	if(next){
+	START_NEXT_HINT;
+	printf("Next Tetro:");
+	HINT_DOWN;
+	HINT_DOWN;
+	uint16_t next_status = next->get_status();
+	for(uint16_t mask = 0xf000; mask > 0; mask >>= 4){
+		for(uint16_t i = (0x8888 & mask); (i & mask) != 0; i >>= 1){
+			set_colour(next->get_colour());
+			if(i & (next_status & mask))
+				PUTBLOCK;
+			else
+			 	PUTSPACE;
+		}
+		HINT_DOWN;
+	}
+	}
+	RESET_ALL;
+	MOVE_CURSOR;
 	fflush(stdout);
 }
 

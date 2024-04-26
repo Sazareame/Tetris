@@ -7,6 +7,7 @@
 
 class Tetris{
 	Tetrominoes* tetro = 0;
+	Tetrominoes* next = 0;
 
 	bool game_is_over = false;
 	int elapse = 500;

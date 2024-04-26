@@ -9,11 +9,13 @@
 #define PUTWALL  printf("\x1b[45m \x1b[0m")
 #define DRAW_BOUNDARY_LINE   printf("\x1b[45m                      \x1b[0m")
 #define DRAW_BODY_LINE       printf("\x1b[45m \x1b[0m                    \x1b[45m \x1b[0m\n")
+#define DRAW_HINT_BOUND   printf("\x1b[45m          \x1b[0m")
 #else
 #define PUTBLOCK printf("O ")
 #define PUTWALL  printf("+")
 #define DRAW_BOUNDARY_LINE   printf("======================")
 #define DRAW_BODY_LINE       printf("+                    +\n")
+#define DRAW_HINT_BOUND   printf("==========")
 #endif
 #define PUTSPACE printf("\x1b[0m\x1b[1m  ")
 
@@ -29,5 +31,9 @@
 
 #define RESET_ALL printf("\x1b[0m")
 #define MAKE_BOLD printf("\x1b[1m")
+
+#define START_NEXT_HINT   printf("\x1b[4;30H")
+#define HINT_DOWN         printf("\x1b[1E\x1b[29C")
+#define MOVE_CURSOR       printf("\x1b[23E")
 
 #endif

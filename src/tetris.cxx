@@ -1,5 +1,6 @@
 #include "tetris.hxx"
 #include <random>
+#include <chrono>
 #ifdef ON_UNIX
 #include <unistd.h>
 #else
@@ -20,14 +21,21 @@ Tetris::step(){
 	make_tetro();
 	previous = status;
 	elapse = 600;
+	auto start_timestamp = std::chrono::system_clock::now();
 	for(;;){
 		wait();
+		auto time_elapsed = std::chrono::system_clock::now();
+		if(std::chrono::duration_cast<std::chrono::milliseconds>(time_elapsed - start_timestamp).count() > 600){
+			start_timestamp = time_elapsed;	
+			goto exedrop;
+		}
 		if(key_event()){
 			update();
 			show();
 			status = previous;
 			continue;
 		}
+exedrop:
 		int cmp_line = tetro->get_vert_pos() + 1;
 		int offset = tetro->get_hori_pos();
 		// get the bottom

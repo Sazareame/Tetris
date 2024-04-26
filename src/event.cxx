@@ -29,10 +29,12 @@ Tetris::key_event_unix(){
 	FD_ZERO(&rfds);
 	FD_SET(0, &rfds);
 	tv.tv_sec = 0;
-	tv.tv_usec = 50;
+	tv.tv_usec = 10;
 
-	if(select(1, &rfds, 0, 0, &tv) > 0)
+	while(select(1, &rfds, 0, 0, &tv) > 0)
 		ch = getchar();
+
+	//while(getchar());
 
 	system("stty -raw echo -F /dev/tty");
 	if(ch == 3) exit(0);
